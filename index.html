@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pendaftaran - SMKN 1 PACITAN</title>
+  <style>
+    * {box-sizing: border-box;}
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg,#0096c7,#00b4d8,#48cae4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      animation: fadeIn 0.6s ease;
+      position: relative;
+      z-index: 2;
+    }
+    .card img {
+      display: block;
+      margin: 0 auto 15px;
+      width: 80px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #023e8a;
+    }
+    p.sub {
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    .step {display: none; opacity:0; transform: translateX(20px); transition: all 0.5s;}
+    .step.active {display: block; opacity:1; transform: translateX(0);}
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #0096c7;
+      box-shadow: 0 0 6px rgba(0,150,199,0.3);
+      outline: none;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn-primary {
+      background: linear-gradient(45deg,#0096c7,#00b4d8);
+      color: #fff;
+    }
+    .btn-primary:hover {background: linear-gradient(45deg,#0077b6,#0096c7);}
+    .btn-secondary {
+      background: #e0e0e0;
+      color: #333;
+    }
+    .btn-secondary:hover {background: #bdbdbd;}
+    .progress {
+      height: 6px;
+      background: #e0e0e0;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 6px;
+      background: linear-gradient(90deg,#0096c7,#48cae4);
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+    @keyframes fadeIn {
+      from {opacity:0;transform:translateY(20px);}
+      to {opacity:1;transform:translateY(0);}
+    }
+    .modal {
+      position: fixed;
+      top:0;left:0;right:0;bottom:0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+    .modal-content h3 {color: #0077b6;}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="1.jpg" alt="Logo SMK 1 PACITAN">
+    <h2>Pendaftaran Siswa Baru</h2>
+    <p class="sub">SMKN 1 PACITAN</p>
+    
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+    <form id="form">
+      <!-- Step 1 -->
+      <div class="step active">
+        <label>Nama Lengkap *</label>
+        <input type="text" name="nama" required>
+        
+        <label>NISN *</label>
+        <input type="text" name="nisn" required>
+        
+        <label>Jenis Kelamin *</label>
+        <select name="jk" required>
+          <option value="">--Pilih--</option>
+          <option>Laki-laki</option>
+          <option>Perempuan</option>
+        </select>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step">
+        <label>Tanggal Lahir *</label>
+        <input type="date" name="ttl" required>
+        
+        <label>Alamat Lengkap *</label>
+        <textarea name="alamat" rows="3" required></textarea>
+        
+        <label>Nomor HP *</label>
+        <input type="text" name="nohp" required>
+
+        <label>Email Aktif *</label>
+        <input type="email" name="email" required>
+
+        <label>Kode / Password dari Email *</label>
+        <input type="text" name="email_code" required>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step">
+        <label>Jurusan Pilihan *</label>
+        <select name="jurusan" required>
+          <option value="">--Pilih Jurusan--</option>
+          <option>TKJ</option>
+          <option>RPL</option>
+          <option>MM</option>
+          <option>AKL</option>
+          <option>OTKP</option>
+        </select>
+
+        <label>Nama Orang Tua / Wali *</label>
+        <input type="text" name="ortu" required>
+        
+        <label>No. HP Orang Tua *</label>
+        <input type="text" name="ortu_hp" required>
+
+        <!-- Ringkasan -->
+        <div id="summary" style="background:#f1faff;padding:10px;border-radius:10px;margin-top:10px;display:none;">
+          <h4>Ringkasan Data:</h4>
+          <ul id="summaryList" style="font-size:14px;color:#333;line-height:1.6;"></ul>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button type="button" class="btn btn-secondary" id="prevBtn">Sebelumnya</button>
+        <button type="button" class="btn btn-primary" id="nextBtn">Berikutnya</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Modal Sukses -->
+  <div class="modal" id="successModal">
+    <div class="modal-content">
+      <h3>✅ Pendaftaran Berhasil!</h3>
+      <p>Data Anda telah terkirim (Demo, tidak tersimpan).</p>
+      <button class="btn btn-primary" onclick="goWebsite()">Kunjungi Website</button>
+    </div>
+  </div>
+
+  <script>
+    const steps = document.querySelectorAll('.step');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const progressBar = document.getElementById('progressBar');
+    const summary = document.getElementById('summary');
+    const summaryList = document.getElementById('summaryList');
+    const modal = document.getElementById('successModal');
+    let currentStep = 0;
+
+    function showStep(n){
+      steps.forEach((s,i)=>s.classList.toggle('active', i===n));
+      prevBtn.style.display = n===0 ? 'none' : 'inline-block';
+      nextBtn.textContent = n===steps.length-1 ? 'Kirim' : 'Berikutnya';
+      progressBar.style.width = ((n+1)/steps.length*100)+'%';
+      if(n===steps.length-1){ showSummary(); }
+    }
+    showStep(currentStep);
+
+    nextBtn.onclick = ()=>{
+      const inputs = steps[currentStep].querySelectorAll('input,select,textarea');
+      for(let inp of inputs){
+        if(!inp.checkValidity()){ inp.reportValidity(); return; }
+      }
+      if(currentStep < steps.length-1){
+        currentStep++;
+        showStep(currentStep);
+      } else {
+        modal.style.display = "flex";
+        // redirect otomatis setelah 3 detik
+        setTimeout(()=>{
+          goWebsite();
+        },3000);
+      }
+    };
+    prevBtn.onclick = ()=>{
+      if(currentStep>0){
+        currentStep--;
+        showStep(currentStep);
+      }
+    };
+    function showSummary(){
+      summary.style.display = 'block';
+      summaryList.innerHTML = '';
+      const data = new FormData(document.getElementById('form'));
+      for(let [key,value] of data.entries()){
+        summaryList.innerHTML += `<li><strong>${key}</strong>: ${value}</li>`;
+      }
+    }
+    function goWebsite(){
+      window.location.href = "https://smkn1pacitan.sch.id/";
+    }
+  </script>
+</body>
+</html>
